@@ -69,25 +69,57 @@ with st.container():
         # Add 3 cards (KPi) above the map
     col1, col2, col3 = st.columns(3)
     with col1:
-        st.markdown('#### Total Listings')
+        st.markdown("<h4 style='text-align: center;'>Total Listings</h4>", unsafe_allow_html=True)
         total_listings = len(data_filtered)
-        st.markdown(f"<h1 style='text-align: center;'>{total_listings}</h1>", unsafe_allow_html=True)
+        st.markdown(f"<h1 style='text-align: center; border:4px solid white; padding:10px;'>{total_listings}</h1>", unsafe_allow_html=True)
 
     with col2:
-        st.markdown('#### Average Price')
+        st.markdown("<h4 style='text-align: center;'>Average Price</h4>", unsafe_allow_html=True)
         average_price = data_filtered['price'].mean()
-        st.markdown(f"<h1 style='text-align: center;'>${average_price:.2f}</h1>", unsafe_allow_html=True)
+        st.markdown(f"<h1 style='text-align: center; border:4px solid white; padding:10px;'>{average_price:.2f} $</h1>", unsafe_allow_html=True)
 
     with col3:
-        st.markdown('#### Maximum Price')
+        st.markdown("<h4 style='text-align: center;'>Maximum Price</h4>", unsafe_allow_html=True)
         max_price = data_filtered['price'].max()
-        st.markdown(f"<h1 style='text-align: center;'>${max_price}</h1>", unsafe_allow_html=True)
+        st.markdown(f"<h1 style='text-align: center; border:4px solid white; padding:10px;'>{max_price} $</h1>", unsafe_allow_html=True)
 
 with st.container():
-    st.markdown('#### Choropleth Map')
-    choropleth = make_choropleth(data_filtered, 'price', 'neighbourhood_group', 'cividis')
-    choropleth.update_layout(autosize=False, width=800, height=600)
-    st.plotly_chart(choropleth, use_container_width=True)
+
+    col1, col2 = st.columns([4,2])
+    with col1:
+        choropleth = make_choropleth(data_filtered, 'price', 'neighbourhood_group', 'cividis')
+        choropleth.update_layout(autosize=False, width=800, height=600)
+        choropleth.update_layout(
+    legend=dict(
+        yanchor="top",
+        y=0.99,
+        xanchor="left",
+        x=0.01,
+        font=dict(
+            color="black"
+        )
+    ), 
+    margin=dict(t=50)
+)
+        st.plotly_chart(choropleth, use_container_width=True)
+
+    with col2:
+        st.markdown("<div style='padding: 10px;'></div>", unsafe_allow_html=True)
+        st.markdown("<h4 style='text-align: center;'>Best Deals</h4>", unsafe_allow_html=True)
+        # Sort data_filtered by price
+        data_sorted = data_filtered.sort_values(by='price')
+        # Select the entry with the lowest price for each neighbourhood
+        best_deals = data_sorted.groupby('neighbourhood_group').first().reset_index()
+
+        # Create three columns
+        cols = st.columns(3)
+
+        for i in range(3):
+            deal = best_deals.iloc[i]
+            cols[i].markdown(f"#### {deal['neighbourhood_group']}")
+            cols[i].markdown(f"**Room Type:** {deal['room_type']}")
+            cols[i].markdown(f"**Price:** ${deal['price']}")
+        
 
 # Create a new row for the charts
 col3, col4 = st.columns(2)
