@@ -136,7 +136,7 @@ if page == 'Dashboard':
         with col2:     
 
             # Create a radar chart
-            fig = px.line_polar(best_deals, r='price', theta='neighbourhood_group', line_close=True)
+            fig = px.line_polar(best_deals, r='price', theta='neighbourhood_group', line_close=True, hover_data=['room_type'])
             fig.update_layout(
                 polar=dict(
                     radialaxis=dict(
