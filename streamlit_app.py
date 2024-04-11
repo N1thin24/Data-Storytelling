@@ -1,6 +1,3 @@
-#######################
-# Import libraries
-
 import streamlit as st
 import pandas as pd
 import altair as alt
@@ -9,7 +6,7 @@ import plotly.express as px
 #######################
 # Page configuration
 st.set_page_config(
-    page_title="US Population Dashboard",
+    page_title="NY Airbnb Dashboard",
     page_icon="🏂",
     layout="wide",
     initial_sidebar_state="expanded")
@@ -21,8 +18,6 @@ alt.themes.enable("dark")
 # Load data
 data = pd.read_csv('data/AB_NYC_2019.csv')
 
-
-#######################
 # Sidebar
 with st.sidebar:
     st.title('🏂 NY Airbnb Dashboard')
@@ -49,9 +44,6 @@ with st.sidebar:
     neighbourhood_group_list = list(data.neighbourhood_group.unique())
     selected_neighbourhood_group = st.selectbox('Select a neighbourhood group', neighbourhood_group_list)
 
-
-#######################
-# Plots
 
 # Choropleth map
 def make_choropleth(input_df, input_id, input_column, input_color_theme):
