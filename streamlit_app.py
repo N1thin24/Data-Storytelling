@@ -23,32 +23,27 @@ with st.sidebar:
     st.title('🏂 NY Airbnb Dashboard')
     
     room_type_list = list(data.room_type.unique())
-    selected_room_type = st.selectbox('Select a room type', room_type_list)
+    selected_room_type = st.multiselect('Select a room type', room_type_list, default=room_type_list)
     
-    price_range_list = ['< $50', '$50 - $100', '$100 - $150', '$150 - $200', '> $200']
-    selected_price_range = st.selectbox('Select a price range', price_range_list)
-    selected_price_column = 'price'
-    if selected_price_range == '< $50':
-        data_filtered = data[data[selected_price_column] < 50]
-    elif selected_price_range == '$50 - $100':
-        data_filtered = data[(data[selected_price_column] >= 50) & (data[selected_price_column] <= 100)]
-    elif selected_price_range == '$100 - $150':
-        data_filtered = data[(data[selected_price_column] > 100) & (data[selected_price_column] <= 150)]
-    elif selected_price_range == '$150 - $200':
-        data_filtered = data[(data[selected_price_column] > 150) & (data[selected_price_column] <= 200)]
-    elif selected_price_range == '> $200':
-        data_filtered = data[data[selected_price_column] > 200]
-    else:
-        data_filtered = data
+    
+    selected_price_range = st.slider('Select a price range', min_value=0, max_value=10000, value=(0, 10000))
+    low_range, high_range = selected_price_range
+    
+
+        
     
     neighbourhood_group_list = list(data.neighbourhood_group.unique())
-    selected_neighbourhood_group = st.selectbox('Select a neighbourhood group', neighbourhood_group_list)
+    selected_neighbourhood_group = st.multiselect('Select a neighbourhood group', neighbourhood_group_list, default=neighbourhood_group_list)
+
+    color_theme_list = ['blues', 'cividis', 'greens', 'inferno', 'magma', 'plasma', 'reds', 'rainbow', 'turbo', 'viridis']
 
 
 # Choropleth map
 def make_choropleth(input_df, input_id, input_column, input_color_theme):
     choropleth = px.scatter_mapbox(input_df, lat='latitude', lon='longitude', color=input_column, hover_name='name',
-                                   hover_data=['neighbourhood', 'room_type', 'price', 'host_name'],
+                                   hover_data={'neighbourhood':True, 'room_type':True, 'price':True, 'host_name':True, 'neighbourhood_group':False, 
+                                               'minimum_nights':True, 'number_of_reviews':True, 'last_review':False, 'reviews_per_month':False, 'calculated_host_listings_count':False, 
+                                               'availability_365':False, 'latitude':False, 'longitude':False},
                                    color_continuous_scale=input_color_theme,
                                    zoom=10,
                                    mapbox_style='carto-positron')
@@ -60,3 +55,55 @@ def make_choropleth(input_df, input_id, input_column, input_color_theme):
         height=500
     )
     return choropleth
+
+#######################
+# Dashboard Main Panel
+# Dashboard Main Panel
+
+st.markdown("<h1 style='text-align: center;'>NY Airbnb Dashboard</h1>", unsafe_allow_html=True)
+data_filtered = data[(data.room_type.isin(selected_room_type)) & 
+                         (data.neighbourhood_group.isin(selected_neighbourhood_group)) &
+                         (data.price >= low_range) & (data.price <= high_range)]
+
+with st.container():
+        # Add 3 cards (KPi) above the map
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.markdown('#### Total Listings')
+        total_listings = len(data_filtered)
+        st.markdown(f"<h1 style='text-align: center;'>{total_listings}</h1>", unsafe_allow_html=True)
+
+    with col2:
+        st.markdown('#### Average Price')
+        average_price = data_filtered['price'].mean()
+        st.markdown(f"<h1 style='text-align: center;'>${average_price:.2f}</h1>", unsafe_allow_html=True)
+
+    with col3:
+        st.markdown('#### Maximum Price')
+        max_price = data_filtered['price'].max()
+        st.markdown(f"<h1 style='text-align: center;'>${max_price}</h1>", unsafe_allow_html=True)
+
+with st.container():
+    st.markdown('#### Choropleth Map')
+    choropleth = make_choropleth(data_filtered, 'price', 'neighbourhood_group', 'cividis')
+    choropleth.update_layout(autosize=False, width=800, height=600)
+    st.plotly_chart(choropleth, use_container_width=True)
+
+# Create a new row for the charts
+col3, col4 = st.columns(2)
+
+with col3:
+    st.markdown('#### Price Distribution')
+    fig = px.histogram(data_filtered, x="price", nbins=30)
+    st.plotly_chart(fig)
+
+with col4:
+    # Add your second chart here
+    st.markdown('#### Second Chart')
+    # fig2 = ...
+    # st.plotly_chart(fig2)
+    
+   
+    
+    
+    
