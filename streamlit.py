@@ -1,5 +1,8 @@
 #######################
 # Import libraries
+!pip install plotly
+!pip install plotly_express
+
 import streamlit as st
 import pandas as pd
 import altair as alt
