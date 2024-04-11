@@ -26,7 +26,7 @@ with st.sidebar:
     selected_room_type = st.multiselect('Select a room type', room_type_list, default=room_type_list)
     
     
-    selected_price_range = st.slider('Select a price range', min_value=0, max_value=10000, value=(0, 10000))
+    selected_price_range = st.slider('Select a price range', min_value=0, max_value=10000, value=(0, 10000), step=5)
     low_range, high_range = selected_price_range
     
 
@@ -94,14 +94,15 @@ col3, col4 = st.columns(2)
 
 with col3:
     st.markdown('#### Price Distribution')
-    fig = px.histogram(data_filtered, x="price", nbins=30)
+    fig = px.histogram(data_filtered, x="price", color='neighbourhood_group', nbins=30)
     st.plotly_chart(fig)
 
 with col4:
     # Add your second chart here
-    st.markdown('#### Second Chart')
-    # fig2 = ...
-    # st.plotly_chart(fig2)
+    st.markdown('#### Room Type Distribution')
+    room_type_counts = data_filtered.groupby(['neighbourhood_group', 'room_type']).size().reset_index(name='count')
+    fig2 = px.pie(room_type_counts, values='count', names='room_type')
+    st.plotly_chart(fig2)
     
    
     
