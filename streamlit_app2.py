@@ -46,8 +46,7 @@ data = pd.read_csv('data/AB_NYC_2019_with_scores.csv')
 # data['best_deal_score'] = data['close_to_center']*data['number_of_reviews'] / (2*data['normalized_price'])
 
 
-if 'clicked_price' not in st.session_state:
-    st.session_state['clicked_price'] = None
+
 
 # #data to csv
 # data.to_csv('data/AB_NYC_2019_with_scores.csv', index=False)
@@ -75,6 +74,11 @@ with st.sidebar:
     page = st.sidebar.radio("Go to", ['Dashboard', 'Comparison'])
 
     
+if 'clicked_price' not in st.session_state:
+    st.session_state['clicked_price'] = None
+
+if 'clicked_price_2' not in st.session_state:
+    st.session_state['clicked_price_2'] = None
 
 # Display the selected page
 if page == 'Dashboard':
@@ -143,9 +147,8 @@ if page == 'Dashboard':
                             (data.price >= low_range) & (data.price <= high_range)]
     data_sorted = data_filtered.sort_values(by='price')
 
-    
-    if 'clicked_price' in st.session_state and st.session_state['clicked_price'] is not None:
-        data_filtered = data_filtered[data_filtered['price'] <= st.session_state['clicked_price']]
+    if st.session_state['clicked_price'] is not None and st.session_state['clicked_price_2'] is not None:
+        data_filtered = data_filtered[(data_filtered['price'] >= st.session_state['clicked_price']) & (data_filtered['price'] <= st.session_state['clicked_price_2'])]
         data_sorted = data_filtered.sort_values(by='price')
 
     # Select the entry with the lowest price for each neighbourhood
@@ -245,16 +248,23 @@ if page == 'Dashboard':
         points = plotly_events(fig, click_event=True, hover_event=False)
         fig.update_layout(template="plotly_dark")
 
-        if points:
-            
+        if points and st.session_state['clicked_price'] != None:
             # Get the 'x' value from the first item in points
-            x_value = points[0]['x']
+            max_value = points[0]['x']
             # Use this 'x' value to filter the data_filtered DataFrame
-            st.session_state['clicked_price'] = x_value
-            # Button to reset the clicked_price
+            st.session_state['clicked_price_2'] = max_value
+    
+        if points and st.session_state['clicked_price'] == None:
+            # Get the 'x' value from the first item in points
+            min_value = points[0]['x']
+            # Use this 'x' value to filter the data_filtered DataFrame
+            st.session_state['clicked_price'] = min_value
+
+
 
         if st.button('Reset'):
             st.session_state['clicked_price'] = None
+            st.session_state['clicked_price_2'] = None
 
                 
     with col4:
