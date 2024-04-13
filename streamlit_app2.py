@@ -4,6 +4,12 @@ import altair as alt
 import plotly.express as px
 import plotly.graph_objects as go
 from streamlit_plotly_events import plotly_events
+import folium
+from streamlit_folium import folium_static
+import streamlit_folium as st_folium
+import folium
+from folium.plugins import MarkerCluster
+
 
 
 #######################
@@ -51,16 +57,20 @@ data = pd.read_csv('data/AB_NYC_2019_with_scores.csv')
 # Sidebar
 with st.sidebar:
     st.title('🏂 NY Airbnb Dashboard')
+
+    #store the input in a variable
+    search_input = st.text_input('Search for keywords')
+
+    selected_price_range = st.slider('Select a price range', min_value=0, max_value=10000, value=(0, 10000), step=5)
+    low_range, high_range = selected_price_range
     
     room_type_list = list(data.room_type.unique())
     selected_room_type = st.multiselect('Select a room type', room_type_list, default=room_type_list)
     
     
-    selected_price_range = st.slider('Select a price range', min_value=0, max_value=10000, value=(0, 10000), step=5)
-    low_range, high_range = selected_price_range
     
-    #store the input in a variable
-    search_input = st.text_input('Search for keywords')
+    
+    
     neighbourhood_group_list = list(data.neighbourhood_group.unique())
     selected_neighbourhood_group = st.multiselect('Select a neighbourhood group', neighbourhood_group_list, default=neighbourhood_group_list)
 
@@ -255,8 +265,7 @@ elif page == 'Comparison':
     best_deals = data_sorted.loc[data_sorted.groupby('neighbourhood_group')['price'].idxmin()].reset_index(drop=True) 
     best_deals['color'] = 'yellow'
     best_deals['marker'] = 'star'
-    import folium
-    from streamlit_folium import folium_static
+    
 
     # Create the map
     m = folium.Map(location=[data_filtered['latitude'].mean(), data_filtered['longitude'].mean()], zoom_start=10)
@@ -265,10 +274,11 @@ elif page == 'Comparison':
     for idx, row in data_filtered.iterrows():
         folium.Marker([row['latitude'], row['longitude']], popup=row['neighbourhood_group']).add_to(m)
 
-    # Display the map in Streamlit
-    folium_static(m)
-            
-    
-        
-        
-        
+    # Display the map in Streamlit and get the map data
+    map_data = st_folium(m, click_events=True)
+
+    # Get the coordinates of the last point clicked
+    last_point_clicked = map_data['last_click']
+
+    if last_point_clicked is not None:
+        st.write(f"You clicked on: {last_point_clicked}")
