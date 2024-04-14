@@ -265,8 +265,6 @@ elif page == 'Comparison':
     best_deals = data_sorted.loc[data_sorted.groupby('neighbourhood_group')['price'].idxmin()].reset_index(drop=True) 
     best_deals['color'] = 'yellow'
     best_deals['marker'] = 'star'
-    import folium
-    from streamlit_folium import folium_static
 
     # Create the map
     m = folium.Map(location=[data_filtered['latitude'].mean(), data_filtered['longitude'].mean()], zoom_start=10)
