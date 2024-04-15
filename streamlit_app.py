@@ -5,8 +5,7 @@ import plotly.express as px
 import numpy as np
 import plotly.graph_objects as go
 import plotly.io as pio
-from streamlit_plotly_events import plotly_events
-
+from streamlit_events import plotly_events
 
 #######################
 # Page configuration
