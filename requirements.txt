@@ -2,4 +2,4 @@ streamlit
 pandas
 plotly
 numpy
-streamlit-events
+streamlit_plotly_events
