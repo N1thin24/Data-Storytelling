@@ -28,7 +28,7 @@ Explore different neighborhoods through our color-coded map, which provides info
  Neighborhood Centers: Marked as large white circles, they help focus the exploration on key areas.
  Best Deals: Highlighted based on price, proximity, and reviews, allowing for economical choices.
 # Getting Started
-To get started with the NYC AirBnB Explorer, visit our Streamlit deployment link (add your URL here). Navigate through various features using the interactive map and filters to find accommodations that best fit your needs.
+To get started with the NYC AirBnB Explorer, visit our Streamlit deployment link (https://ny-airbnb-visualization.streamlit.app/). Navigate through various features using the interactive map and filters to find accommodations that best fit your needs.
 
 # Limitations
 While we strive to provide comprehensive insights, the accuracy of visualizations depends on the underlying data, which may not always be up-to-date. Additionally, the complexity of data might require users to have a basic understanding of navigating through data-driven interfaces.
