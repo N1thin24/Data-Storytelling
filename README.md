@@ -1,12 +1,37 @@
-# Data-Storytelling
+##NYC AirBnB Explorer
+#Overview
+Welcome to the NYC AirBnB Explorer, a visualization tool designed for travelers and data enthusiasts to explore Airbnb listings in New York City through an interactive and detailed dashboard. Our project aims to challenge the traditional Airbnb website by providing deeper insights and a more customized experience, helping travelers make informed decisions.
 
-## Project Requirements
-You are free to use libraries introduced in the class (i.e., Altair, Panel, Streamlit, and D3.js) or any code-based libraries (e.g., Bokeh, Plotly, Holoviz, GeoViews, PyVis). However, you are not allowed to use dashboard software (e.g., Tableau, Microsoft Power BI, QlikSense) for the final project.
+#Project Description
+This project utilizes data from Airbnb to visualize accommodation options in NYC. Our dashboard comprises four interconnected views, each with detailed widgets that provide insights and allow users to uncover correlations between various data points such as price, location, and type of accommodation.
 
-The requirements of your project are the following:
+#Technical Achievements
+##Data Source: Utilized a comprehensive dataset from Kaggle that includes variables like accommodation type, location, description, and availability.
+##Tools Used: Implemented using Plotly for dynamic visualizations and Streamlit for web deployment. Collaboration was managed through GitHub.
+##Interactive Features: Includes hover information pop-ups, interconnected views that reflect changes dynamically, and multiple filtering options to tailor the visualization to user preferences.
+##Dashboard Features
+##Key Performance Indicators (KPIs)
+##Total Listings: Displays the total number of available listings.
+##Average Price: Shows the average cost of accommodations.
+##Maximum Price: Indicates the highest-priced listing.
+##Interactive Map
+Explore different neighborhoods through our color-coded map, which provides information about each listing at a glance. Zoom and pan functionalities allow for detailed exploration.
 
-At least 3 different views/visualization components (e.g., 3 bar charts only count as 1 component)
-Multiple views coordinated with linked highlighting. A click/hover/selection interaction within one view must trigger a change in a different view. At least 2 views need to be linked. Ideally, these views are linked bidirectionally.
-At least 2 UI widgets allow users to filter the data or update certain views interactively (e.g., dropdown, radio button, range slider, calendar).
-Interactive tooltips are shown when users hover over marks, at least in one view.
-You do not necessarily build backends; only an index.html file should be enough. Your interface should be as self-explaining as possible, with appropriate labels for panels, axes, and widgets, a legend documenting the meaning of visual encodings, and a meaningful title and description.
+#Dynamic Filters
+##Location and Type: Filter listings by neighborhoods and accommodation types such as luxurious apartments, cozy lofts, etc.
+##Price Range: Adjust the price range slider to filter accommodations within your budget.
+#Visualizations
+##Price Distribution: Color-coded by neighborhood, this chart helps you compare pricing across different areas.
+##Room Type Distribution: Offers insights into the variety of available accommodations.
+##Radar Chart: Shows the minimum price in each neighborhood, helping identify the most affordable options.
+##Enhanced Navigation
+##Neighborhood Centers: Marked as large white circles, they help focus the exploration on key areas.
+##Best Deals: Highlighted based on price, proximity, and reviews, allowing for economical choices.
+#Getting Started
+To get started with the NYC AirBnB Explorer, visit our Streamlit deployment link (add your URL here). Navigate through various features using the interactive map and filters to find accommodations that best fit your needs.
+
+Limitations
+While we strive to provide comprehensive insights, the accuracy of visualizations depends on the underlying data, which may not always be up-to-date. Additionally, the complexity of data might require users to have a basic understanding of navigating through data-driven interfaces.
+
+Team
+This project was brought to life by a dedicated team of data scientists and developers. (List team members and roles here).
