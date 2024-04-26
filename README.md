@@ -34,4 +34,4 @@ To get started with the NYC AirBnB Explorer, visit our Streamlit deployment link
 While we strive to provide comprehensive insights, the accuracy of visualizations depends on the underlying data, which may not always be up-to-date. Additionally, the complexity of data might require users to have a basic understanding of navigating through data-driven interfaces.
 
 # Team
-This project was brought to life by a dedicated team of data scientists and developers. (List team members and roles here).
+This project was brought to life by a dedicated team of data scientists and developers Nithin Alfred, Theo Belen-Halimi, Olivia De La Chapelle and Alexandra Pricop.
