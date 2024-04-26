@@ -35,3 +35,10 @@ While we strive to provide comprehensive insights, the accuracy of visualization
 
 # Team
 This project was brought to life by a dedicated team of data scientists and developers Nithin Alfred, Theo Belen-Halimi, Olivia De La Chapelle and Alexandra Pricop.
+
+#Preview and Demo:
+![image](https://github.com/N1thin24/Data-Storytelling/assets/107985125/ba04ff28-a62e-47dd-b46a-615b604f48b7)
+![image](https://github.com/N1thin24/Data-Storytelling/assets/107985125/94186e68-df7c-496a-8876-60af217d2f87)
+https://youtu.be/GXmcYuh0dgQ
+
+
